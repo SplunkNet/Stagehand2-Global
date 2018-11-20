@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2018-11-20 21:34:39">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description> </description>
+<inserted/>
+<name>Stagehand Global Helper</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date/>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>bd0b0cd7dbf52b00e049f5861d9619d4</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>darrin.achtman@snc</sys_created_by>
+<sys_created_on>2018-11-20 21:34:39</sys_created_on>
+<sys_id>681b041bdbf52b00e049f5861d961953</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>darrin.achtman@snc</sys_updated_by>
+<sys_updated_on>2018-11-20 21:34:39</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Stagehand Global Helper">d332ed39db5243002e5df2b6ae9619f2</application>
+<category>customer</category>
+<comments/>
+<name>sys_script_include_c2522979db5243002e5df2b6ae961979</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;public&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.StagehandGlobalHelper&lt;/api_name&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;name&gt;StagehandGlobalHelper&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var StagehandGlobalHelper = Class.create();
+StagehandGlobalHelper.prototype = {
+	initialize: function() {
+	},
+	create:function(tableName, recordDetails, runBusRules, setSysFields){
+		runBusRules = typeof runBusRules == "boolean" ? runBusRules : true;
+		setSysFields = typeof setSysFields == "boolean" ? setSysFields : true;
+		
+		var newRecordGR = new GlideRecord(tableName);
+		newRecordGR.initialize();
+		newRecordGR.setWorkflow(runBusRules);
+		newRecordGR.autoSysFields(setSysFields);
+		return this._setFields(recordDetails, newRecordGR, "insert");
+	},
+	remove:function(tableName, recordID, runBusRules, setSysFields){
+		runBusRules = typeof runBusRules == "boolean" ? runBusRules : true;
+		setSysFields = typeof setSysFields == "boolean" ? setSysFields : true;
+		
+		var delRecordGR = new GlideRecord(tableName);
+		delRecordGR.setWorkflow(runBusRules);
+		delRecordGR.autoSysFields(setSysFields);
+		delRecordGR.addQuery("sys_id",recordID);
+		delRecordGR.query();
+		if(delRecordGR.next()){
+			delRecordGR.deleteRecord();
+			return true;
+		}
+		return false;
+	},
+	update:function(tableName, fieldSearch, recordDetails, runBusRules, setSysFields){
+		runBusRules = typeof runBusRules == "boolean" ? runBusRules : true;
+		setSysFields = typeof setSysFields == "boolean" ? setSysFields : true;
+		
+		var updateRecordGR = new GlideRecord(tableName);
+		updateRecordGR.setWorkflow(runBusRules);
+		updateRecordGR.autoSysFields(setSysFields);
+		if(updateRecordGR.get(fieldSearch,recordDetails[fieldSearch].toString())){
+			return this._setFields(recordDetails,updateRecordGR,"update");
+		}
+		return this.create(tableName, recordDetails, runBusRules, setSysFields);
+	},
+	_setFields : function(recordDetails, recordGR, action){
+		var fieldList = Object.keys(recordDetails);
+		for(var i = 0; i != fieldList.length; i++){
+			var field = fieldList[i];
+			var value = recordDetails[field];
+			if(recordGR.isValidField(field)){
+				var internalType = recordGR.getElement(field).getED().getInternalType();
+				if (internalType == "glide_duration"){
+					if (value.indexOf('javascript:') === 0)
+						value = value.match(/'(.*?)'/)[1];
+				}
+				if(internalType == "password"){
+					recordGR[field].setDisplayValue(value);
+					recordGR.temporalPassword = value;
+				}else{
+					if(field == "job_id" &amp;&amp; recordGR.getTableName() == "sys_trigger"){
+						recordGR.job_id.setDisplayValue(value);
+					}else{
+						recordGR.setValue(field,value);
+					}
+				}
+			}
+		}
+		recordGR[action]();
+		recordGR.temporalAction = action;
+		return recordGR;
+	},
+	log:function(message){
+		var gdt = new GlideDateTime();
+		gs.log(gdt.getNumericValue() + "\n" + message,this.type);
+	},
+	type: 'StagehandGlobalHelper'
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;darrin.achtman@snc&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2017-11-08 16:35:18&lt;/sys_created_on&gt;&lt;sys_id&gt;c2522979db5243002e5df2b6ae961979&lt;/sys_id&gt;&lt;sys_mod_count&gt;23&lt;/sys_mod_count&gt;&lt;sys_name&gt;StagehandGlobalHelper&lt;/sys_name&gt;&lt;sys_package display_value="Stagehand Global Helper" source="d332ed39db5243002e5df2b6ae9619f2"&gt;d332ed39db5243002e5df2b6ae9619f2&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Stagehand Global Helper"&gt;d332ed39db5243002e5df2b6ae9619f2&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_c2522979db5243002e5df2b6ae961979&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;darrin.achtman@snc&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2017-11-09 23:28:35&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+<payload_hash>570582500</payload_hash>
+<remote_update_set display_value="Stagehand Global Helper">681b041bdbf52b00e049f5861d961953</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>darrin.achtman@snc</sys_created_by>
+<sys_created_on>2018-11-20 21:34:39</sys_created_on>
+<sys_id>641b041bdbf52b00e049f5861d961954</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>167330bcb520000001</sys_recorded_at>
+<sys_updated_by>darrin.achtman@snc</sys_updated_by>
+<sys_updated_on>2018-11-20 21:34:39</sys_updated_on>
+<table/>
+<target_name>StagehandGlobalHelper</target_name>
+<type>Script Include</type>
+<update_domain>global</update_domain>
+<update_guid>675f049eb85e4300345d97bacaf29668</update_guid>
+<update_guid_history>675f049eb85e4300345d97bacaf29668:-822348516,ad7ab3c2bb5e430073d0f0fd4fb5d597:-796744947,765ab3c2cf5e43003027ccadeedfbea4:-1992781683,2069b3c2705e4300f42d41c7be520f45:-980816281,5ba3f302fd5e4300aabe201528849cb5:-1355849546,c6927fce211e43002fc00508b18e3f4b:1457727094,6a42ffce251e4300a2383099579db8a5:8514833,24107f0e611e43002c676b2587485e70:1457727094,ffef6f0ee71e43001e5336e68910bbd9:-329560789,0f28274a571e4300bc2caf2cbbe633b7:1457727094,a687ef0afc1e43009e4fac65d20e10f2:-431064243,750427c67d1e43005d90150879166b5b:-874920462,f3d9daf108d243002629b7e0e0197b2f:2109697369,ad0916f1c6d24300123858021906300d:2066447703,58789eb10fd24300cfcd8cede4d4c91c:-731810901,0c581eb1c4d24300c5eda3863091aa4f:-500416367,be96d671f5d2430004d55586fac6509d:-1485927507,b466d6717cd24300974c8f5aecc34749:792516779,6e16967180d24300e65f64d87567f0af:-959903109,03c5527169d24300164eb03e613c3f3a:-961997264,d7551271b2d2430039bd1c43dcedbfc2:756354096,d4a09eb9fd92430073756f22af31b410:863662931,269056bd9f924300415ee974fbb4c377:-1527197246,ff2769f9f0524300e0963637e100a302:-2104984865</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Stagehand Global Helper">d332ed39db5243002e5df2b6ae9619f2</application>
+<category>customer</category>
+<comments/>
+<name>sys_app_d332ed39db5243002e5df2b6ae9619f2</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_app"><sys_app action="INSERT_OR_UPDATE"><active>true</active><enforce_license>log</enforce_license><js_level>helsinki_es5</js_level><licensable>true</licensable><license_category/><license_model>none</license_model><logo/><menu/><name>Stagehand Global Helper</name><private>false</private><restrict_table_access>false</restrict_table_access><runtime_access_tracking>permissive</runtime_access_tracking><scope>global</scope><scoped_administration>false</scoped_administration><short_description/><source>d332ed39db5243002e5df2b6ae9619f2</source><store_correlation_id/><store_url/><sys_class_name>sys_app</sys_class_name><sys_code/><sys_created_by>darrin.achtman@snc</sys_created_by><sys_created_on>2017-11-08 16:13:42</sys_created_on><sys_id>d332ed39db5243002e5df2b6ae9619f2</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>darrin.achtman@snc</sys_updated_by><sys_updated_on>2017-11-08 16:13:42</sys_updated_on><template/><trackable>true</trackable><user_role/><vendor/><vendor_prefix/><version>1.0.0</version></sys_app></record_update>]]></payload>
+<payload_hash>-231014965</payload_hash>
+<remote_update_set display_value="Stagehand Global Helper">681b041bdbf52b00e049f5861d961953</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>darrin.achtman@snc</sys_created_by>
+<sys_created_on>2018-11-20 21:34:39</sys_created_on>
+<sys_id>ac1b041bdbf52b00e049f5861d961953</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>167330bcb360000001</sys_recorded_at>
+<sys_updated_by>darrin.achtman@snc</sys_updated_by>
+<sys_updated_on>2018-11-20 21:34:39</sys_updated_on>
+<table/>
+<target_name>Stagehand Global Helper</target_name>
+<type>Custom Application</type>
+<update_domain>global</update_domain>
+<update_guid>6f32a579d052430098a0b226c24ddda0</update_guid>
+<update_guid_history>6f32a579d052430098a0b226c24ddda0:30601451,6f32a579d052430098a0b226c24ddda0:30601451</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>
